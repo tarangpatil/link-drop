@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import BootstrapClient from "@/ui/BootstrapClient";
 
 export const metadata: Metadata = {
   title: "Link Drop",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={``}>{children}</body>
+      <body className={``}>
+        <BootstrapClient />
+        {children}
+      </body>
     </html>
   );
 }
