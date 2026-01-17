@@ -23,6 +23,7 @@ export default async function SignUp() {
             data: { name, email, password: hashedPw },
           });
           await signIn("credentials", { email, password, redirect: false });
+          redirect("/login");
         }}
       >
         <div className="mb-3">
