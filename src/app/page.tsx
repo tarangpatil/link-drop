@@ -1,21 +1,23 @@
-import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
+import { auth, signOut } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const id = 1;
-  const name = "Tarang Patil";
-  const email = "turupatil@linkdrop.com";
-  const password = await bcrypt.hash("very-secure-password", 12);
+  const session = await auth();
 
-  await prisma.user.deleteMany();
-  const turuPatil = await prisma.user.create({
-    data: { id, name, email, password },
-  });
+  if (!session?.user) redirect("/login");
 
   return (
     <main className="container">
-      <h1>Hi, {turuPatil.name}</h1>
-      <code>{JSON.stringify(turuPatil)}</code>
+      <header className="">
+        <form
+          action={async () => {
+            "use server";
+            await signOut();
+          }}
+        >
+          <button className="btn btn-primary">Logout</button>
+        </form>
+      </header>
     </main>
   );
 }
