@@ -18,4 +18,21 @@ model User {
   name     String
   email    String @unique
   password String
+
+  sentInvites     Invite[] @relation("sender_invites")
+  receivedInvites Invite[] @relation("receiver_invites")
+}
+
+model Invite {
+  senderId Int
+  sender   User @relation("sender_invites", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  receiverId Int
+  receiver   User @relation("receiver_invites", fields: [receiverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  sentAt DateTime @default(now())
+
+  @@id([senderId, receiverId])
+  @@index([senderId])
+  @@index([receiverId])
 }
