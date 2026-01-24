@@ -1,4 +1,5 @@
 import { auth, signOut } from "@/lib/auth";
+import Navbar from "@/ui/Navbar";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -9,14 +10,6 @@ export default async function Home() {
   return (
     <main className="container">
       <header className="">
-        <form
-          action={async () => {
-            "use server";
-            await signOut();
-          }}
-        >
-          <button className="btn btn-primary">Logout</button>
-        </form>
       </header>
     </main>
   );
