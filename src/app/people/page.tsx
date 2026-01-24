@@ -1,11 +1,9 @@
 "use client";
 import { User } from "@/generated/client";
-import { prisma } from "@/lib/prisma";
 import { FormEvent, useState } from "react";
 
 export default function People() {
   const [results, setResults] = useState<User[]>([]);
-  console.log(results);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
