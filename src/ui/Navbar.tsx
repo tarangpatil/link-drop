@@ -22,7 +22,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="navbar navbar-expand-md bg-body-tertiary ">
+    <nav className="navbar navbar-expand-md bg-body-tertiary">
       <div className="container-fluid">
         <Link
           className="navbar-brand d-flex align-items-center gap-2 fw-semibold"
