@@ -1,16 +1,19 @@
 "use client";
 import { User } from "@/generated/client";
 import { FormEvent, useState } from "react";
+import SearchResult from "./SearchResult";
 
 export default function People() {
   const [results, setResults] = useState<User[]>([]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    fetch(`/api/user/query?q=${e.currentTarget["query"].value}`)
+    fetch(`/api/query/user?q=${e.currentTarget["query"].value}`)
       .then((res) => res.json())
-      .then((data) => setResults(data));
+      .then((data) => setResults(data))
+      .catch(console.error);
   }
+
   return (
     <main className="container my-4">
       <h3 className="mb-4">
@@ -32,17 +35,8 @@ export default function People() {
       </form>
       {results.length ? (
         <ul className="list-group">
-          {results.map((result, idx) => (
-            <li className="list-group-item" key={idx}>
-              <p className="my-0 d-flex justify-content-between align-items-center">
-                {result.name}
-                <span>
-                  <button className="mx-1 btn btn-outline-secondary">
-                    <i className="bi bi-send"></i> Invite
-                  </button>
-                </span>
-              </p>
-            </li>
+          {results.map((user, idx) => (
+            <SearchResult user={user} key={idx} />
           ))}
         </ul>
       ) : (

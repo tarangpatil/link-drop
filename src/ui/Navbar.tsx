@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/lib/actions/auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -60,10 +61,12 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="d-flex gap-2">
-            <button className="btn btn-outline-danger" type="button">
-              <i className="bi bi-box-arrow-right me-1"></i>
-              Logout
-            </button>
+            <form action={logout}>
+              <button className="btn btn-outline-danger" type="submit">
+                <i className="bi bi-box-arrow-right me-1"></i>
+                Logout
+              </button>
+            </form>
           </div>
         </div>
       </div>
