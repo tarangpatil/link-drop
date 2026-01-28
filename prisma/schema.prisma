@@ -21,6 +21,9 @@ model User {
 
   sentInvites     Invite[] @relation("sender_invites")
   receivedInvites Invite[] @relation("receiver_invites")
+
+  chatAsA Drop[] @relation("ChatA")
+  chatAsB Drop[] @relation("ChatB")
 }
 
 model Invite {
@@ -35,4 +38,14 @@ model Invite {
   @@id([senderId, receiverId])
   @@index([senderId])
   @@index([receiverId])
+}
+
+model Drop {
+  userAId Int
+  userBId Int
+
+  userA User @relation("ChatA", fields: [userAId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userB User @relation("ChatB", fields: [userBId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([userAId, userBId])
 }
