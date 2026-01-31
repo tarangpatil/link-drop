@@ -15,13 +15,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         user = await prisma.user.findFirst({
           where: { email: credentials.email as string },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            password: true,
+          },
         });
 
         if (!user) throw new Error("account with this email does not exist");
 
         const passwordMatches = await bcrypt.compare(
           credentials.password as string,
-          user.password,
+          user.password
         );
 
         if (!passwordMatches) throw new Error("password does not match");

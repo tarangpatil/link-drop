@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import BootstrapClient from "@/ui/BootstrapClient";
 import Navbar from "@/ui/Navbar";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Link Drop",
@@ -15,10 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={``}>
-        <BootstrapClient />
-        <Navbar />
-        {children}
+      <body className={``} data-bs-theme="dark">
+        <SessionProvider>
+          <BootstrapClient />
+          <Navbar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

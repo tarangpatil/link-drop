@@ -1,10 +1,12 @@
 "use client";
 
 import { logout } from "@/lib/actions/auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const { data: session } = useSession();
   const pathname = usePathname();
 
   const navlinks = [
@@ -60,14 +62,18 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="d-flex gap-2">
-            <form action={logout}>
-              <button className="btn btn-outline-danger" type="submit">
-                <i className="bi bi-box-arrow-right me-1"></i>
-                Logout
-              </button>
-            </form>
-          </div>
+          {session ? (
+            <div className="d-flex gap-2">
+              <form action={logout}>
+                <button className="btn btn-outline-danger" type="submit">
+                  <i className="bi bi-box-arrow-right me-1"></i>
+                  Logout
+                </button>
+              </form>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </nav>

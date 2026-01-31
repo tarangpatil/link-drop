@@ -1,4 +1,5 @@
 import { auth, signIn } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
