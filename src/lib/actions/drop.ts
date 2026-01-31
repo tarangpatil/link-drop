@@ -11,7 +11,7 @@ export async function createDrop(formData: FormData) {
   const a = parseInt(formData.get("userA") as string);
   const b = parseInt(formData.get("userB") as string);
 
-  const newDrop = await prisma.drop.create({
+  const newDrop = await prisma.dropChat.create({
     data: { userAId: Math.min(a, b), userBId: Math.max(a, b) },
     include: { userA: true, userB: true },
   });

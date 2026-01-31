@@ -30,7 +30,7 @@ export async function acceptInvite(formData: FormData) {
         },
       },
     }),
-    prisma.drop.create({
+    prisma.dropChat.create({
       data: {
         userAId: Math.min(sender.id, receiver.id),
         userBId: Math.max(sender.id, receiver.id),
