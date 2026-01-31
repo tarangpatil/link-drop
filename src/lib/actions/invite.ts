@@ -8,22 +8,18 @@ export async function acceptInvite(formData: FormData) {
   const session = await auth();
   if (!session?.user?.email) redirect("/login");
 
-  const { sender, receiver } = (
-    JSON.parse(formData.get("invite") as string) as {
-      invite: {
-        sender: {
-          id: number;
-          name: string;
-          email: string;
-        };
-        receiver: {
-          id: number;
-          name: string;
-          email: string;
-        };
-      };
-    }
-  ).invite;
+  const { sender, receiver } = JSON.parse(formData.get("invite") as string) as {
+    sender: {
+      id: number;
+      name: string;
+      email: string;
+    };
+    receiver: {
+      id: number;
+      name: string;
+      email: string;
+    };
+  };
 
   const [deletedInvite, createdDrop] = await prisma.$transaction([
     prisma.invite.delete({
@@ -44,4 +40,30 @@ export async function acceptInvite(formData: FormData) {
   redirect("/");
 }
 
-export async function deleteInvite(formData: FormData) {}
+export async function deleteInvite(formData: FormData) {
+  const session = await auth();
+  if (!session?.user?.email) redirect("/login");
+
+  const { sender, receiver } = JSON.parse(formData.get("invite") as string) as {
+    sender: {
+      id: number;
+      name: string;
+      email: string;
+    };
+    receiver: {
+      id: number;
+      name: string;
+      email: string;
+    };
+  };
+
+  await prisma.invite.delete({
+    where: {
+      senderId_receiverId: {
+        senderId: sender.id,
+        receiverId: receiver.id,
+      },
+    },
+  });
+  redirect("/invites");
+}

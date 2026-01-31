@@ -24,7 +24,7 @@ export default async function () {
                   <input
                     type="hidden"
                     name="invite"
-                    value={JSON.stringify({ invite })}
+                    value={JSON.stringify(invite)}
                   />
                   <button
                     className="btn btn-outline-success mx-1"
@@ -34,6 +34,11 @@ export default async function () {
                   </button>
                 </form>
                 <form action={deleteInvite}>
+                  <input
+                    type="hidden"
+                    name="invite"
+                    value={JSON.stringify(invite)}
+                  />
                   <button className="btn btn-outline-danger mx-1">
                     <i className="bi bi-trash3"></i> Delete
                   </button>
