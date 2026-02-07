@@ -4,10 +4,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Login() {
-  const session = await auth();
-
-  if (session?.user) redirect("/");
-
   return (
     <main className="container my-5 ">
       <form
