@@ -5,10 +5,6 @@ import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 
 export default async function SignUp() {
-  const session = await auth();
-
-  if (session?.user) redirect("/");
-
   return (
     <main className="container my-5 ">
       <form
