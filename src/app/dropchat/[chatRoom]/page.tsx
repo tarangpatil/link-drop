@@ -9,7 +9,7 @@ type Props = {
   params: Promise<{ chatRoom: string }>;
 };
 
-export default async function ({ params }: Props) {
+export default async function DropChat({ params }: Props) {
   const session = await auth();
   if (!session?.user?.email) redirect("/login");
 

@@ -1,4 +1,4 @@
-import { auth, signIn } from "@/lib/auth";
+import { signIn } from "@/lib/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";

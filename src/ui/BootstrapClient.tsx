@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function BootstrapClient() {
   useEffect(() => {
-    /// @ts-ignore
+    /// @ts-expect-error bootstrap js bundle be imported
     import("bootstrap/dist/js/bootstrap.min.js");
   }, []);
   return <></>;

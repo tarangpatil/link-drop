@@ -21,7 +21,7 @@ export async function acceptInvite(formData: FormData) {
     };
   };
 
-  const [deletedInvite, createdDrop] = await prisma.$transaction([
+  const [] = await prisma.$transaction([
     prisma.invite.delete({
       where: {
         senderId_receiverId: {

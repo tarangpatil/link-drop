@@ -1,17 +1,17 @@
 import { User } from "@/generated/client";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   user: User;
 };
-export default function ({ user }: Props) {
+export default function SearchResults({ user }: Props) {
   const [invited, setInvited] = useState(false);
 
   useEffect(() => {
     fetch(`/api/query/invite?q=${user.email}`)
       .then((res) => res.json())
       .then((data) => setInvited(data));
-  }, []);
+  }, [user.email]);
 
   function handleInvite() {
     fetch(`/api/query/invite`, {
@@ -19,9 +19,7 @@ export default function ({ user }: Props) {
       method: "POST",
     })
       .then((res) => res.json())
-      .then((data) => {
-        setInvited(true);
-      });
+      .then(() => setInvited(true));
   }
 
   return (

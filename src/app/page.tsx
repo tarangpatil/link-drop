@@ -1,6 +1,5 @@
-import { auth, signOut } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import Navbar from "@/ui/Navbar";
 import { encodeChatRoom } from "@/utils/generic";
 import Link from "next/link";
 import { redirect } from "next/navigation";

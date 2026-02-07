@@ -1,5 +1,4 @@
-import { auth, signIn } from "@/lib/auth";
-import { revalidatePath } from "next/cache";
+import { signIn } from "@/lib/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -41,7 +40,7 @@ export default async function Login() {
           />
         </div>
         <p className="mb-3">
-          Don't have an account?{" "}
+          Don&rsquo;t have an account?{" "}
           <Link href={"/signup"} className="link-primary">
             Signup here!
           </Link>
