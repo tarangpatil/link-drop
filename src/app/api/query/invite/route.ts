@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
           { sender: { email: session.user.email } },
         ],
       },
-    })) > 0,
+    })) > 0
   );
 }
 
