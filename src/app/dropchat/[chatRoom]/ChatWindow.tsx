@@ -1,10 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
 
-type Props = {};
+type Props = {
+  dropsSent: {
+    senderId: number;
+    receiverId: number;
+    sentAt: Date;
+    dropText: string;
+  }[];
+  dropsReceived: {
+    senderId: number;
+    receiverId: number;
+    sentAt: Date;
+    dropText: string;
+  }[];
+};
 
-export default function ChatWindow({}: Props) {
+export default function ChatWindow({ dropsSent, dropsReceived }: Props) {
   const [panel, setPanel] = useState<"sent" | "received">("sent");
 
   return (
@@ -46,10 +60,17 @@ export default function ChatWindow({}: Props) {
             transition: `all ease-in-out 150ms`,
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
-          magnam obcaecati assumenda sit officiis est placeat aspernatur minima,
-          molestiae ab eum magni hic blanditiis cumque dolor! Veritatis ipsa
-          reprehenderit voluptatem!
+          {dropsSent.map((drop, idx) => (
+            <div key={idx} className="card mb-3">
+              <div className="card-body">
+                <h3 className="card-title"></h3>
+                <p className="card-text small">{drop.dropText}</p>
+                <Link href={drop.dropText} className="btn btn-secondary">
+                  <i className="bi bi-box-arrow-up-right small"></i>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
         <div
           className="w-100 position-absolute top-0"
@@ -58,10 +79,17 @@ export default function ChatWindow({}: Props) {
             transition: `all ease-in-out 150ms`,
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
-          magnam obcaecati assumenda sit officiis est placeat aspernatur minima,
-          molestiae ab eum magni hic blanditiis cumque dolor! Veritatis ipsa
-          reprehenderit voluptatem!
+          {dropsReceived.map((drop, idx) => (
+            <div key={idx} className="card mb-3">
+              <div className="card-body">
+                <h3 className="card-title"></h3>
+                <p className="card-text small">{drop.dropText}</p>
+                <button className="btn btn-secondary">
+                  <i className="bi bi-copy"></i>
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

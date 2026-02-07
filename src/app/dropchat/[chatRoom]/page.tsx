@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { decodeChatRoom } from "@/utils/generic";
 import { redirect } from "next/navigation";
 import ChatWindow from "./ChatWindow";
+import { sendDrop } from "@/lib/actions/drop";
 
 type Props = {
   params: Promise<{ chatRoom: string }>;
@@ -34,14 +35,24 @@ export default async function ({ params }: Props) {
       ? [dropchat.userA, dropchat.userB]
       : [dropchat.userB, dropchat.userA];
 
+  const dropsSent = await prisma.drop.findMany({
+    where: { senderId: user.id, receiverId: recipient.id },
+  });
+
+  const dropsReceived = await prisma.drop.findMany({
+    where: { senderId: recipient.id, receiverId: user.id },
+  });
+
   return (
     <main className="container my-3">
       <h3 className="mb-3">Your drops with {recipient.name}</h3>
-      <form>
+      <form action={sendDrop}>
         <div className="input-group">
+          <input type="hidden" name="sender-email" value={user.email} />
+          <input type="hidden" name="receiver-email" value={recipient.email} />
           <input
             type="text"
-            name="drop-link"
+            name="drop-text"
             placeholder="Send another drop"
             className="form-control"
           />
@@ -50,7 +61,7 @@ export default async function ({ params }: Props) {
           </button>
         </div>
       </form>
-      <ChatWindow />
+      <ChatWindow {...{ dropsReceived, dropsSent }} />
     </main>
   );
 }
