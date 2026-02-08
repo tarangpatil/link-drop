@@ -3,30 +3,33 @@
 import { redirect } from "next/navigation";
 import { auth } from "../auth";
 import { prisma } from "../prisma";
-import { revalidatePath } from "next/cache";
-import { encodeChatRoom } from "@/utils/generic";
 
-export async function sendDrop(formData: FormData) {
+export async function sendDrop(
+  _initState: { errors?: string },
+  formData: FormData
+): Promise<{ errors?: string }> {
   const session = await auth();
-  if (!session?.user?.email) redirect("/login");
-  console.log(formData);
-  const newDrop = await prisma.drop.create({
+  if (!session?.user?.email) return { errors: "Not authenticated" };
+
+  try {
+    new URL(formData.get("drop-text") as string);
+  } catch (error) {
+    console.error(error);
+    return { errors: "Invalid URL" };
+  }
+  const dropURL = new URL(formData.get("drop-text") as string);
+  dropURL.searchParams.delete("igsh");
+  dropURL.searchParams.delete("si");
+
+  await prisma.drop.create({
     data: {
       sender: { connect: { email: formData.get("sender-email") as string } },
       receiver: {
         connect: { email: formData.get("receiver-email") as string },
       },
-      dropText: formData.get("drop-text") as string,
+      dropText: dropURL.toString(),
     },
     include: { sender: true, receiver: true },
   });
-  console.log({ newDrop });
-  const { receiverId, senderId } = newDrop;
-
-  revalidatePath(
-    `/dropchat/${encodeChatRoom({
-      userAId: Math.min(senderId, receiverId),
-      userBId: Math.max(senderId, receiverId),
-    })}`
-  );
+  return {};
 }
