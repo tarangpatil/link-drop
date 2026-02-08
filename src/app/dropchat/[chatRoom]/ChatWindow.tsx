@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import DropCard from "./DropCard";
 
 type Props = {
   dropsSent: {
@@ -61,15 +61,7 @@ export default function ChatWindow({ dropsSent, dropsReceived }: Props) {
           }}
         >
           {dropsSent.map((drop, idx) => (
-            <div key={idx} className="card mb-3">
-              <div className="card-body">
-                <h3 className="card-title"></h3>
-                <p className="card-text small">{drop.dropText}</p>
-                <Link href={drop.dropText} className="btn btn-secondary">
-                  <i className="bi bi-box-arrow-up-right small"></i>
-                </Link>
-              </div>
-            </div>
+            <DropCard {...{ drop }} key={idx} />
           ))}
         </div>
         <div
@@ -80,15 +72,7 @@ export default function ChatWindow({ dropsSent, dropsReceived }: Props) {
           }}
         >
           {dropsReceived.map((drop, idx) => (
-            <div key={idx} className="card mb-3">
-              <div className="card-body">
-                <h3 className="card-title"></h3>
-                <p className="card-text small">{drop.dropText}</p>
-                <button className="btn btn-secondary">
-                  <i className="bi bi-copy"></i>
-                </button>
-              </div>
-            </div>
+            <DropCard {...{ drop }} key={idx} />
           ))}
         </div>
       </div>
