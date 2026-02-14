@@ -2,8 +2,14 @@
 import { User } from "@/generated/client";
 import { FormEvent, useState } from "react";
 import SearchResult from "./SearchResult";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function People() {
+  const { status } = useSession();
+  const router = useRouter();
+  if (status === "unauthenticated") router.push("/login");
+
   const [results, setResults] = useState<User[]>([]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
